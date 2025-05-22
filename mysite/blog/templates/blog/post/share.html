@@ -1,0 +1,35 @@
+
+
+
+
+{% extends "blog/base.html" %}
+{% block title %}Share a post{% endblock %}
+{% block content %}
+    
+    {% if sent %}
+        
+        <h1>E-mail successfully sent</h1>
+        <p>
+        "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.
+        </p>
+        
+    {% else %}
+        
+        <h1>Share "{{ post.title }}" by e-mail</h1>
+        <form method="post">
+        
+        {% comment %} 
+        as_p displays fields at <p> elements
+         
+        CSRF template tag generates a hidden field like this
+        <input type='hidden' name='csrfmiddlewaretoken'
+        value='26JjKo2lcEtYkGoV9z4XmJIEHLXN5LDR' />
+        
+        {% endcomment %}
+        {{ form.as_p }}
+        {% csrf_token %}
+            <input type="submit" value="Send e-mail">
+        </form>
+        
+    {% endif %}
+{% endblock %}

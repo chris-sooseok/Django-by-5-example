@@ -1,0 +1,19 @@
+
+
+<h2>Add a new comment</h2>
+
+{% comment %}django uses django/forms/field.html template by default.
+    You can also create custom field templates and reuse them by adding the template_name attribute to any form field
+{% endcomment %}
+
+<form action="{% url "blog:post_comment" post.id %}" method="post">
+    <div class="left">
+    {{ form.name.as_field_group }}
+    </div>
+    <div class="left">
+    {{ form.email.as_field_group }}
+    </div>
+    {{ form.body.as_field_group }}
+    {% csrf_token %}
+    <p><input type="submit" value="Add comment"></p>
+</form>

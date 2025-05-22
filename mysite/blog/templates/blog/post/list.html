@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+
+{% block title %} My Blog {% endblock %}
+
+{% block content %}
+    <h1> My Blog </h1>
+    {% for post in posts %}
+        <h2>
+             <!-- mapping to url name you defined from urls.py -->
+{#           <a href="{% url 'blog:post_detail' post.id %}"> #}
+            
+                {# ! canonical url #}
+                <a href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+            </a>
+        </h2>
+        <p class="date">
+            Published {{ post.publish }} by {{ post.author }}
+        </p>
+    {{ post.body|truncatewords:30|linebreaks }}
+    {% endfor %}
+    
+    {% comment %}
+     ? adding pagination
+     ? include template tag loads the given template and renders it
+     ? with to pass additional context variables
+  
+     ? this is used for function based view {% include "pagination.html" with page=posts %}
+    {% endcomment %}
+    
+    {% include "pagination.html" with page=page_obj %}
+{% endblock %}
