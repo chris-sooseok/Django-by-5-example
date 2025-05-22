@@ -1,3 +1,5 @@
 679971DCC5CAC.pdf
 .idea
-venv
+**/venv/
+.DS_Store
+**/.env
