@@ -1,8 +1,5 @@
 
 # Django Basics
-## Initial Migration
-- apply initial migrations for the applications in INSTALLED_APPS
-
 ## Logging
 - each HTTP request is logged in the console by the development server
 
@@ -22,13 +19,12 @@
 # About Migrations
 
 1. you have defined or changed your data model 
-2. python manage.py makemigrations <appname> # 
-- create migration file that summarizes your changes to apply them to database
-- it doesn't simply create your migration file, but it compares your previous existing migration and synchronizes your current changes with the existing model
+2. python manage.py makemigrations <appname> 
+    - create migration file that summarizes your changes to apply them to database
+   - it doesn't simply create your migration file, but it compares your previous existing migration and synchronizes your current changes with the existing model
 3. python manage.py sqlmigrate <appname> <migration id>
-- display SQL queries to apply your changes to database
+   - display SQL queries to apply your changes to database
 
-## python manage.py sqlmigrate blog 0001
 CREATE TABLE "blog_post" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, 
             "title" varchar(250) NOT NULL, "slug" varchar(250) NOT NULL, 
             "body" text NOT NULL, "publish" datetime NOT NULL, "created" datetime NOT NULL, 
@@ -44,17 +40,40 @@ COMMIT;
 - An index on the slug column because SlugField fields imply an index by default.
 - An index on the author_id column because ForeignKey fields imply an index by default.
 
-4. python manage.py migrate # will apply all changes made
+4. python manage.py migrate
+   - will apply all changes made
+
+## Creating an empty migration file
+python manage.py makemigrations --name=filename --empty blog
+
 ------------------------------------------------------------------------------------------
-# ORM (Object Relational Mapper)
-- database abstraction API
+##  ORM (Object Relational Mapper) - database abstraction API
 - allows you to interact with database without having to write SQL statements
 - maps your models to database tables
 - Django ORM is based on QuerySets, which is a collection of database queries to retrieve objects from your database
 - Django Query Sets are lazy, which means queries are evaluated when forced
 - You can also create a custom manager that equip your needs of queries
+- used in templates as well
+
+------------------------------------------------------------------------------------------
+# Dumping existing data
+
 
 ------------------------------------------------------------------------------------------
 # Things to look into
 - ordering of db
 - indexing of db
+
+------------------------------------------------------------------------------------------
+# sitemap and RSS feed
+
+
+# Search Engines
+
+# trigram search
+Inspect similarities between words
+Search and query based on the similarities
+	•	Autocomplete suggestions
+	•	Search-as-you-type
+	•	Typo-tolerant search
+	•	Fuzzy matching names, titles, etc.

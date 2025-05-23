@@ -10,14 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-#? Settings
-#? When you have to deal with multiple environments that require different configurations, you can create a different settings file for each environment
+""" ? Settings
+? When you have to deal with multiple environments that require different configurations, you can create a different settings file for each environment 
+?"""
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -33,6 +33,7 @@ DEBUG = True
 #? add your domain/host to this to allow it serve your Django site
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
 # Application definition
 
@@ -42,13 +43,18 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes', #? A framework for handling content types
     'django.contrib.sessions', #? A session framework
     'django.contrib.messages', #? A messaging framework
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.staticfiles', #? A framework for managing static files
+    'django.contrib.postgres',
+    'taggit', #? resuable application that offers a Tag model and a manager to add tags to any model
     'blog.apps.BlogConfig',
 ]
 
 #? decouple library for environment variables handling
 from decouple import config
-# Email server configuration
+
+#? Email server configuration used in blog app
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
@@ -92,12 +98,22 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
+
 
 
 # Password validation

@@ -2,9 +2,6 @@ from django.contrib import admin
 from .models import Post, Comment
 # Register your models here.
 
-
-
-
 # https://docs.djangoproject.com/en/5.0/ref/contrib/admin/.
 
 # admin.site.register(Post)
