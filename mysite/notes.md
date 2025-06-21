@@ -57,7 +57,12 @@ python manage.py makemigrations --name=filename --empty blog
 
 ------------------------------------------------------------------------------------------
 # Dumping existing data
-
+- docker pull postgres:16.2
+- docker run --name=blog_db -e POSRGRES_DB=blog -e POSTGRES_USER=blog -e POSTGRES_PASSWORD=xxxxx -p 5432:5432 -d postgres:16.2
+- python manage.py dumpdata --indent=2 --output=mysite_data.json
+- change settings on database
+- python manage.py migrate
+- python manage.py loaddata mysite_data.json
 
 ------------------------------------------------------------------------------------------
 # Things to look into
@@ -66,9 +71,11 @@ python manage.py makemigrations --name=filename --empty blog
 
 ------------------------------------------------------------------------------------------
 # sitemap and RSS feed
+sitemap
+- a sitemap is a file that provides search engines with a list of all the important pages on a website, along with their URLs and other relevant information. This helps search engines crawl and index your website more efficiently, potentially leading to faster crawling and indexing of your content. 
 
-
-# Search Engines
+RSS feed
+- An RSS (Really Simple Syndication) feed is an online file that provides updates about a website's content in a standardized, computer-readable format. It essentially acts as a subscription to a website, allowing users to keep track of new posts, articles, or other content without having to manually visit the site.
 
 # trigram search
 Inspect similarities between words
