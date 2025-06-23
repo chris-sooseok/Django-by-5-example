@@ -1,8 +1,0 @@
-# chap 1 and 2
-asgiref==3.8.1
-Django==5.0.14
-python-decouple==3.8
-sqlparse==0.5.3
-
-# chap 3
-django-taggit==5.0.1

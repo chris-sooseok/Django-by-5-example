@@ -1,29 +1,12 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.db.models.functions import Now
 from django.urls import reverse
 from taggit.managers import TaggableManager
 
-""" 
-? Python class is a collection of data and methods.
-? Classes are the blueprint for bundling data and functionality together.
-? Creating a new class creates a new type of object, allowing you to create instances of that type
-
-? A Django model is a source of information about the behaviors of your data. It consists of a Python
-? class that subclasses django.db.models.Model. Each model maps to a single database table, where
-? each attribute of the class represents a database field.
-
-? When you create a model, Django will provide you with a practical API to query objects in the database easily.
-? We will define the database models for our blog application. Then, we will generate the database migrations
-? for the models to create the corresponding database tables. When applying the migrations,
-? Django will create a table for each model defined in the models.py file of the application. """
-
 
 class PublishedManager(models.Manager):
-    """
-    ? creating a custom query set to facilitate published post retrieve
-    """
+    # ? with models.Manager creating a custom query set to facilitate published post retrieve
     def get_queryset(self):
         return (
             super().get_queryset().filter(status=Post.Status.PUBLISHED)
@@ -35,7 +18,6 @@ class Post(models.Model):
     published = PublishedManager()
 
     #! if primary key is not specified, DEFAULT_AUTO_FIELD from apps.py is applied.
-
     title = models.CharField(max_length=250) # translates to VARCHAR in db
 
     #? creating an unique slug for the date stored in publish field. This enforcement is not done in database level
