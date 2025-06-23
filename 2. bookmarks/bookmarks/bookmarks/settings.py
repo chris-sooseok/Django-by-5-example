@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,3 +122,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'dashboard' # tells which URL to redirect the user after a successful login if no next parameter is present in the request
+LOGIN_URL = 'login' # login_required decorator redirect the user to this
+LOGOUT_URL = 'logout'
+
+# this setting indicates the class that will be used to send emails
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MDEIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
