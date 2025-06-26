@@ -28,6 +28,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     def clean_email(self):
         data = self.cleaned_data['email']
+        User = get_user_model()
         if User.objects.filter(email=data).exists():
             raise forms.ValidationError("Email already registered")
         return data
@@ -40,6 +41,7 @@ class UserEditForm(forms.ModelForm):
 
     def clean_email(self):
         data = self.cleaned_data['email']
+        User = get_user_model()
         qs = User.objects.exclude(id=self.instance.id).filter(email=data)
         if qs.exists():
             raise forms.ValidationError("Email already registered")

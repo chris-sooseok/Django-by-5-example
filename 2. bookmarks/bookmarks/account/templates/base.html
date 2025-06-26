@@ -17,7 +17,7 @@
                 <a href="{% url "dashboard" %}">My dashboard</a>
             </li>
             <li {% if section == "images" %}class="selected"{% endif %}>
-                <a href="#">Images</a>
+                <a href="{% url 'images:list' %}">Images</a>
             </li>
             <li {% if section == "people" %}class="selected"{% endif %}>
 
@@ -53,5 +53,16 @@
     {% block content %}
     {% endblock %}
 </div>
+
+
+<!-- ? script tag to include JS code -->
+<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script type="module">
+    // ? passing event named DOMContentLoaded which executes event only when initial DOM is fully loaded and constructed
+        // ? any template that extends base.html can use domready block to include specific code to execute
+    {% block domready %}
+    {% endblock %}
+
+</script>
 </body>
 </html>

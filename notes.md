@@ -10,6 +10,9 @@ Django looks for templates by order of appearance in the INSTALLED_APPS settings
 - To deploy Django in a production environment, you should run it as a WSGI application using a web server, such as Apache, Gunicorn, or uWSGI,
 - or as an ASGI application using a server such as Daphne or Uvicorn
 
+## Indexes
+https://docs.djangoproject.com/en/5.0/ref/models/options/#django.db.models.Options.indexes
+
 
 # Commands
 
@@ -33,4 +36,5 @@ python manage.py migrate
 
 ### Creating an empty migration file
 python manage.py makemigrations --name=filename --empty blog
+
 

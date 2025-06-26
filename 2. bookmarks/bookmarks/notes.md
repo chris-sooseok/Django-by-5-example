@@ -68,7 +68,7 @@ python -m pip install pyOpenSSL==24.1.0
 
 5. include 'django_extensions' in INSTALLED_APPS
 6. python manage.py runserver_plus --cert-file cert.crt
-Django Extensions will generate a key and certificate automatically, then, now you can access your site with https with self-generated SSL
+Django Extensions will generate a key and  SSL/TLS certificate automatically, then, now you can access your site with https with the certificate
 
 7. include 'social_core.backends.google.GoogleOAuth2' in AUTHENTICATION_BACKENDS
 
@@ -80,4 +80,30 @@ Django Extensions will generate a key and certificate automatically, then, now y
 
 # Chapter 6: Implementing Bookmark
 
+## Bookmarklet implementation
+- add bookmarklet_launcher.js to bookmark bars
+- launcher will add bookmark DOM
+- bookmark DOM display all image elements found on a page
+- add click event to each image that clikcing will redirect to bookmark page on your website
+
+## thumbnails using easy-thembnails
+- use {% load thumbnail %} to create and display thumbnails of images
+- path to upload is specified by MEDIA_ROOT and upload_to field
+
+## Asynchronous Javascript and XML (AJAX) to implment "like" feature
+- AJAX is a misleading name because AJAX requests can exchange data not only in XML format but also in formats such as JSON, HTML, and plain text
+- send request without reloading
+- JS fetch function
+
+### JavaScript and Django template
+In some cases, it is useful to generate JavaScript code dynamically using Django in order to use the results of QuerySets or server-side calculations to define variables in JavaScript.
+
+We have to include the CSRF token in all JS fetch requests that use unsafe HTTP methods, such as POST or PUT.
+
+To include CSRF token in HTTP requests through JavsScript, we will need to retrieve the token from the csrftoken cookie, which is set by Django if the CSRF protection is active. To handle csrftoken cookie, use JavaScript Cookie which is a lightweight JS API for handling cookies
+
+ 
+## Infinite scrolling
+image list view that handles both standard browser requests and requests originating from JS
+render whole page for the first page request, and append only images for additional request that originates from JS
 
