@@ -45,9 +45,9 @@
 {% endblock %}
 
 {% block domready %}
+    import { like_request } from "{% static 'js/like_request.js' %}";
     const csrftoken = Cookies.get('csrftoken');
     const likeUrl = "{% url 'images:like' %}"
-    import { like_request } from "{% static 'js/like_request.js' %}";
     document.addEventListener("DOMContentLoaded", () => {
         like_request(csrftoken, likeUrl);
     });

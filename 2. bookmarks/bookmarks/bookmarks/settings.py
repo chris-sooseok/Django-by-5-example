@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'images.apps.ImagesConfig',
     'easy_thumbnails',
+    'actions.apps.ActionsConfig',
 ]
 
 MIDDLEWARE = [
@@ -157,7 +158,11 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
-# if DEBUG:
-#     import mimetypes
-#     mimetypes.add_type('application/javascript', '.js', True)
-#     mimetypes.add_type('text/css', '.css', True)
+from django.urls import reverse_lazy
+
+# ? Django adds get_absolute_url dynamically to any models that appear in this
+# ? this method returns the corresponding URL for the given model specified in the setting, which follos /account/users/<username> format
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username]),
+}
+

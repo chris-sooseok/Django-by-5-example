@@ -104,3 +104,19 @@ Django Extensions will generate a key and  SSL/TLS certificate automatically, th
 image list view that handles both standard browser requests and requests originating from JS
 render whole page for the first page request, and append only images for additional request that originates from JS
 
+
+# Chapter 7: Tracking user actions
+Building Follow Systems
+    - Creating many-to-many relationship between users by using a custom intermediate model
+    - Adding or deleting relationship through the intermediate model
+
+## Creating an activity stream application
+Contenttype framework
+- Can track all models installed in your project and provides a generic interface to interact with your models
+- contenttypes app contains a ContentType model of which instances represents the actual models of your application. New instances of ContentType are automatically created when new models are installed in your project
+- each model contains fields
+    -   app_label, model, and name
+    
+Generic key
+- Generic relations allow you to associate models in a non-exclusive manner, enabling a single model to relate to multiple other models.
+
