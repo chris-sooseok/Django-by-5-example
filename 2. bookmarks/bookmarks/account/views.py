@@ -62,11 +62,18 @@ def dashboard(request):
         actions = actions.filter(user_id__in=following_ids)
 
     # actions = actions[:10]
-    # ? using select_related method to join profile table
-    # ? select_related only works for one-to-many and one-to-one relationship
+    # ! select_related only works for one-to-many and one-to-one relationship
     actions = actions.select_related(
-        'user', 'user__profile'
-    ).prefetch_related('target')[:10]
+        # ? fetching each user object for each action
+        'user',
+        # ? joining profile object for each user
+        'user__profile'
+    # ! prefetch_related used for many-to-many relationships or reverse foreign key
+    # ! also is a seperate query
+    ).prefetch_related(
+        # ? fetching target objects for each action
+        'target'
+    )[:10]
 
     # section is used to highlight the current section in the main menu of the site
     return render(

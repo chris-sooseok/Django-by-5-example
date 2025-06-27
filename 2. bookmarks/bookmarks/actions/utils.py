@@ -10,7 +10,7 @@ def create_action(user, verb, target=None):
     similar_actions = Action.objects.filter(
         user_id=user.id,
         verb=verb,
-        created_gte=last_minute,
+        created__gte=last_minute,
     )
     if target:
         target_ct = ContentType.objects.get_for_model(target)

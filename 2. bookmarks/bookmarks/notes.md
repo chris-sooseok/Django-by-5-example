@@ -120,3 +120,4 @@ Contenttype framework
 Generic key
 - Generic relations allow you to associate models in a non-exclusive manner, enabling a single model to relate to multiple other models.
 
+
