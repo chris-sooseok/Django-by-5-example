@@ -12,11 +12,17 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/%Y/%m/%d/')
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    # Django creates an intermediary join table using the primary keys of both models for many-to-many relationships
+    # ? Django creates an intermediary join table using the primary keys of both models for many-to-many relationships
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users_liked', blank=True)
 
+    # ? denormalizing total likes so that later ordering it becomes available at hands
+    total_likes = models.PositiveIntegerField(default=0)
+
     class Meta:
-        indexes = [models.Index(fields=['-created'])]
+        indexes = [
+            models.Index(fields=['-created']),
+            models.Index(fields=['-total_likes']),
+        ]
         ordering = ['-created']
 
     def __str__(self):

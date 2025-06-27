@@ -106,18 +106,53 @@ render whole page for the first page request, and append only images for additio
 
 
 # Chapter 7: Tracking user actions
-Building Follow Systems
+## Building Follow Systems
     - Creating many-to-many relationship between users by using a custom intermediate model
     - Adding or deleting relationship through the intermediate model
 
-## Creating an activity stream application
+## activity stream application with contenttype framework
 Contenttype framework
 - Can track all models installed in your project and provides a generic interface to interact with your models
 - contenttypes app contains a ContentType model of which instances represents the actual models of your application. New instances of ContentType are automatically created when new models are installed in your project
 - each model contains fields
     -   app_label, model, and name
+
+Craete action model and create_action function that can be usally globally across your project 
     
 Generic key
 - Generic relations allow you to associate models in a non-exclusive manner, enabling a single model to relate to multiple other models.
+
+## Optimized QuerySet for relationships
+select_related and prefetch_related
+
+## Denormalizing images_total_like count field
+- Denormalization is a process to make data redundant in a way that it optimizes read performance by coping related data to an object
+- A side effect is that it is difficult to keep your denormalized data updated
+There are several ways to improve performance that you have to take into account before denormalizing fields. Consider database indexes, query optimization, and caching before starting to denormalize your data.
+
+## Singals to incremenet image_total_likes count
+django offers several signals for models located at django.db.models.signals. Some examples are as follows:
+- pre_save and post_save that are sent before or after calling the save() method of a model
+- pre_delete and post_delete after of before delete() method of a model or querySet
+- m2m_changed when many-to-many field on a model is changed
+
+Django signals are synchronous and blocking. Asynchronous taks are done with Celery
+
+## Application configuration classes
+Django allows you to specify configuration classes for your apps, which is <appname>Config file.
+The application configuration class allows you to store metadata and the configuration for the application, and it provides introspection for the application. 
+
+## debug toolbar
+python -m pip install django-debug-toolbar==4.3.0
+
+Consult debug toolbar to identify sql query exeuction time, request/response cycle process, etc.
+
+python manage.py debugsqlshell
+- outputs SQL statements for jango ORM queries
+
+## Storing image view counts with Redis
+- key/value database that stores everything in memory
+- data can be persisted by dumping data to disk or keeping commands to a log
+- versatile and supports diverse data structures
 
 

@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-bx=co)d*%*3vco6(q2o^p#6oj0e#_ikw0gbv9t=8vleervzzv8
 DEBUG = True
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
-
+# display debug toolbar only to this ip
+INTERNAL_IPS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,9 +42,15 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'easy_thumbnails',
     'actions.apps.ActionsConfig',
+    'debug_toolbar',
 ]
 
+# ? The order of MIDDLEWARE is important.
+# ? DebugToolbarMiddleware has to be placed before any other middleware, except for middleware that
+# ? encodes the response’s content
+
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -83,6 +90,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -165,4 +176,3 @@ from django.urls import reverse_lazy
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username]),
 }
-
