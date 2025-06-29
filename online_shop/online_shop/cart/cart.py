@@ -7,9 +7,11 @@ class Cart:
     ! cart management class with sessions
     """
     def __init__(self, request):
+        # ? request.session is a user specific dictionary
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
+            # ? if not exist, create an empty dictionary
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 

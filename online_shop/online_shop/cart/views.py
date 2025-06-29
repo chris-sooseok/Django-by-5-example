@@ -30,7 +30,7 @@ def cart_detail(request):
     cart = Cart(request)
     # to each item in cart session, adding initial form values which allows users to update quantity in cart detail page
     for item in cart:
-        item['undate_quantity_form'] = CartAddProductForm(
+        item['update_quantity_form'] = CartAddProductForm(
             initial={'quantity': item['quantity'], 'override': True}
         )
     return render(request,
