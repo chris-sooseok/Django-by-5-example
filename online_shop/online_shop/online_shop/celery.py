@@ -12,7 +12,7 @@ app = Celery('online_shop')
 # You load any custom configuration from your project settings using the config_from_object() method
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-# tell Celery to auto-discover asynchronous tasks for your apps
-# celery looks for tasks.py file in each app aaded to INSTALLED_APPS
+# tell Celery to auto-discover asynchronous tasks.py for your apps
+# celery looks for tasks.py.py file in each app aaded to INSTALLED_APPS
 app.autodiscover_tasks()
 
