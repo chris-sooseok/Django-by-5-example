@@ -77,6 +77,74 @@ collectstatic command copies all static files from your apps into the directory 
 
 Create pdf with weasyprint and attach it to email being sent from Celery worker
 
+# Chapter 10: coupons and recomendation systems
+
+## coupon
+construct coupon attribute in cart class that is created with session data
+
 ## Recommendation System with Redis
 Create algorithm logic with Redis by building data whenever items are purchased
 Based on the data built, recommend items to each item list
+
+# Chapter 11: Internationalization
+
+Internationalization relies on the GNU gettext toolset to generate and manage message files.
+A message file is a plain text file that represents a language. It contains a part, or all, of the translation strings found in your application and their respective translation for a single language. Once the translation is done, message files are compiled to offer rapid access to translated strings
+
+mekemessages: This runs over the source tree to find all the strings marked for translation and creates or updates the .po message files in the locale directory. A single .po file is created for each language
+
+compilemessages: This compiles the existing .po message files to .mo files, which are used to retrieve translations.
+
+brew install gettext
+brew link --force gettext
+
+## How to add translations to a django project
+1. Mark the strings for translation in your Python code and your templates.
+2. Run the makemessages command to create or update message files that include all the translation strings from your code.
+3. Translate the strings contained in the message files.
+4. Compile the message files using the compilemessages management command.
+
+## How dango determines the current language
+djnago comes with a middleware that determines the current language based on the request data. This is the LocaleMiddleware that resides in django.middleware.locale.LocaleMiddleware which performs the following tasks
+    
+    1. If you are using i18n_patterns, that is, you are using translated URL patterns, it looks for a language prefix in the requested URL to determine the current language. You will learn to translate URL patterns in the Translating URL patterns section.
+    2. If no language prefix is found, it looks for an existing LANGUAGE_SESSION_KEY in the current user’s session.
+    3. If the language is not set in the session, it looks for an existing cookie with the current language. A custom name for this cookie can be provided in the LANGUAGE_COOKIE_NAME setting. By default, the name for this cookie is django_language.
+    4. If no cookie is found, it looks for the Accept-Language HTTP header of the request.
+    5. If the Accept-Language header does not specify a language, Django uses the language defined in the LANGUAGE_CODE setting.
+
+By default, Django will use the language defined in the LANGUAGE_CODE setting unless you are using LocaleMiddleware. The process described here only applies when using this middleware.
+
+## Translating python code
+There are various methods to handle translations within python code
+- Standard translations
+- Lazy translations: Executed when the value is accessed rather than when the function is called.
+A common example where lazy translations are beneficial is in the settings.py file of your project, where immediate translation is not practical because the settings must be defined before the translation system is fully ready.
+- Translations including variables: Used to interpolate variables within strings that are to be translated.
+- Plural forms in translations: Techniques to manage translations that depend on numerical quantities that might affect the string being translated.
+
+For translating literals in your Python code, you can mark strings for translation using the gettext() function included in django.utils.translation. This function translates the message and returns a string. 
+
+django-admin makemessages --all
+django-admin compilemessages
+
+## Translating templates
+{% translate %} template tag
+- allows you to mark a literal for translation. Internally, exeuctes gettext() on the given text
+
+## Using Rosetta translation interface
+Rosetta is a third-party application that allows you to edit translations directly in the browser, using the same interface as the Django administration site. Rosetta makes it easy to edit .po files, and it updates compiled translation files. This eliminates the need to download and upload translation files, and it supports collaborative editing by multiple users.
+
+## URL patterns for internationalization
+One reason for translating URLs is to optimize your site for search engines.
+
+## Translating models with django-parler
+django-parler generates a separate database table for each model that contains translations. This table includes all the translated fields and a foreign key for the original object that the translation belongs to.
+
+python -m pip install django-parler==2.3
+
+## localization
+By default, Django applies the format localization for each locale.
+
+python -m pip install django-localflavor==4.0
+It’s very useful for validating local regions, local phone numbers, identity card numbers, social security numbers, and so on.
