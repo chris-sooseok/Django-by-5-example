@@ -76,3 +76,7 @@ python -m pip install WeasyPrint==61.2
 collectstatic command copies all static files from your apps into the directory defined in the STATIC_ROOT setting
 
 Create pdf with weasyprint and attach it to email being sent from Celery worker
+
+## Recommendation System with Redis
+Create algorithm logic with Redis by building data whenever items are purchased
+Based on the data built, recommend items to each item list
