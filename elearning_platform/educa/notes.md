@@ -39,3 +39,18 @@ HTML Drag and Drop API to use fetch api to send an async http request that store
 python -m pip install django-braces==1.15.0
 django-braces contains a collection of generic mexins that provides additiona features for class-based views that are useful for various common scenarios
 
+# Using cache framework
+Django includes a robust cache system that allows you to cache data with different levels of granularity. You can cache a single query, the output of a specific view, parts of rendered template content, or your entire site. Items are stored in the cache system for a default time, but you can specify the timeout when you cache data.
+
+docker pull memcached:1.6.26
+docker run -it --rm --name memcached -p 11211:11211 memcached:1.6.26 -m 64
+python -m pip install pymemcache==4.0.0
+
+## cache levels that django provides
+- Low-level cache API: Provides the highest granularity. Allows you to cache specific queries or calculations.
+- Template cache: Allows you to cache template fragments.
+- Per-view cache: Provides caching for individual views.
+- Per-site cache: The highest-level cache. It caches your entire site.
+
+## redis
+python -m pip install django-redisboard==8.4.0
