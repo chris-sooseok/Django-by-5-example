@@ -77,7 +77,7 @@ collectstatic command copies all static files from your apps into the directory 
 
 Create pdf with weasyprint and attach it to email being sent from Celery worker
 
-# Chapter 10: coupons and recomendation systems
+# Chapter 10: coupons and recommendation systems
 
 ## coupon
 construct coupon attribute in cart class that is created with session data
@@ -86,7 +86,7 @@ construct coupon attribute in cart class that is created with session data
 Create algorithm logic with Redis by building data whenever items are purchased
 Based on the data built, recommend items to each item list
 
-# Chapter 11: Internationalization
+# Chapter 11: Internationalization and localization
 
 Internationalization relies on the GNU gettext toolset to generate and manage message files.
 A message file is a plain text file that represents a language. It contains a part, or all, of the translation strings found in your application and their respective translation for a single language. Once the translation is done, message files are compiled to offer rapid access to translated strings
@@ -143,7 +143,7 @@ django-parler generates a separate database table for each model that contains t
 
 python -m pip install django-parler==2.3
 
-## localization
+## localization with localflavor which provides localized validation
 By default, Django applies the format localization for each locale.
 
 python -m pip install django-localflavor==4.0
