@@ -54,3 +54,28 @@ python -m pip install pymemcache==4.0.0
 
 ## redis
 python -m pip install django-redisboard==8.4.0
+
+# Building API
+Django REST framework
+- Serializers: To transform data into a standardized format that other programs can understand, or to deserialize data, by converting data into a format that your program can process.
+- Parsers and renderers: To render (or format) serialized data appropriately before it is returned in an HTTP response. Similarly, to parse incoming data to ensure that it’s in the correct form.
+- API views: To implement the application logic.
+- URLs: To define the API endpoints that will be available.
+- Authentication and permissions: To define authentication methods for the API and the permissions required for each view.
+
+## Handling Authentication
+DRF provides authentication classes to identify the user performing the request. If authentication is successful, the framework sets the authenticated User object in request.user.
+DRF provides the following authentication backends:
+- BasicAuthentication
+- TokenAuthentication
+- SessionAuthentication
+- RemoteUserAuthentication
+
+## Adding permissions to views
+- AllowAny: Unrestricted access, regardless of whether a user is authenticated or not.
+- IsAuthenticated: Allows access to authenticated users only.
+- IsAuthenticatedOrReadOnly: Complete access to authenticated users. Anonymous users are only allowed to execute read methods such as GET, HEAD, or OPTIONS.
+- DjangoModelPermissions: Permissions tied to django.contrib.auth. The view requires a queryset attribute. Only authenticated users with model permissions assigned are granted permission.
+- DjangoObjectPermissions: Django permissions on a per-object basis.
+
+

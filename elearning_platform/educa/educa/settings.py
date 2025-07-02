@@ -47,8 +47,16 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     'embed_video',
     'redisboard',
+    'rest_framework',
     'debug_toolbar',
 ]
+
+REST_FRAMEWORK = {
+    # ? this class relies on djnago permission system to allow users to edit while rendering read-only for anonymous users
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
