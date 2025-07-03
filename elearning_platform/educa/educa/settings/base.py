@@ -13,16 +13,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--8mtrfo8kvm1icb+1mc(4luarv3&7o*^9qipfo^uju=qij6faw'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = 'mdasincuciaddias-8mtrfo8kvm1icb+1mc(4luarv3&7o*^9qipfo^uju=qij6faw'
 
 ALLOWED_HOSTS = []
 
@@ -36,7 +33,10 @@ LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
 
 # Application definition
 
+ASGI_APPLICATION = 'educa.asgi.application'
+
 INSTALLED_APPS = [
+    'daphne',
     'courses.apps.CoursesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'embed_video',
     'redisboard',
     'rest_framework',
+    'chat.apps.ChatConfig',
     'debug_toolbar',
 ]
 
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'courses.middleware.subdomain_course_middleware',
 ]
 
 ROOT_URLCONF = 'educa.urls'
@@ -94,13 +96,6 @@ WSGI_APPLICATION = 'educa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # ? redis setting
 CACHES = {
     'default': {
@@ -121,6 +116,17 @@ CACHES = {
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 60 * 15  # 15 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'educa'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -155,6 +161,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'

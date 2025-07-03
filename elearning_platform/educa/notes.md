@@ -78,4 +78,79 @@ DRF provides the following authentication backends:
 - DjangoModelPermissions: Permissions tied to django.contrib.auth. The view requires a queryset attribute. Only authenticated users with model permissions assigned are granted permission.
 - DjangoObjectPermissions: Django permissions on a per-object basis.
 
+# Building chat server
 
+## Asynchronous applications using ASGI
+Django is usually deployed using Web Server Gateway Interface (WSGI), which is the standard interface for Python applications to handle HTTP requests.
+By using ASGI, we will enable Django to handle each message independently and in real time, creating a smooth and live chat experience for students.
+
+## The request/reponse cycle using Channels
+Your existing synchronous views will co-exist with the WebSocket functionality that we will implement with Daphne, and you will serve both HTTP and WebSocket requests.
+python -m pip install -U 'channels[daphne]==4.1.0'
+
+## daphne
+When daphne is added to the INSTALLED_APPS setting, it takes control over the runserver command, replacing the standard Django development server. This will allow you to serve asynchronous requests during development. Besides handling URL routing to Django views for synchronous requests, Daphne also manages routes to WebSocket consumer
+
+## Consumer
+Consumers handle WebSockets in a very similar way to how traditional views handle HTTP requests. Consumers are ASGI applications that can handle messages, notifications, and other things. Unlike Django views, consumers are built for long-running communication. URLs are mapped to consumers through routing classes that allow you to combine and stack consumers.
+
+## Channel layer
+Channel layers allow you to communicate between different instances of an application. A channel layer is the transport mechanism that allows multiple consumer instances to communicate with each other and with other parts of Django.
+
+## Channels and groups
+Channel layers provide two abstractions to manage communications: channels and groups:
+- Channel: You can think of a channel as an inbox where messages can be sent or as a task queue. Each channel has a name. Messages are sent to a channel by anyone who knows the channel name and then given to consumers listening on that channel.
+Group: Multiple channels can be grouped into a group. Each group has a name. A channel can be added or removed from a group by anyone who knows the group name. Using the group name, you can also send a message to all channels in the group.
+
+## Redis as a channel layer
+python -m pip install channels-redis==4.2.0
+
+
+## Modifying consumer to be fully asynchronous
+Synchronous consumers operate in a way that each request must be processed in sequence, one after
+the other. Synchronous consumers are convenient for accessing Django models and calling regular
+synchronous I/O functions. However, asynchronous consumers perform better because of their ability
+to perform non-blocking operations, moving to another task without waiting for the first operation
+to complete. They don’t require additional threads when handling requests, thus reducing wait times
+and increasing the ability to scale to more users and requests simultaneously.
+
+
+# Deployment
+
+docker compose exec web python /code/educa/manage.py migrate
+
+## serving django through WSGI and NGINX
+Django’s primary deployment platform is WSGI. WSGI stands for Web Server Gateway Interface , and it is the standard for serving Python applications on the web.
+When you generate a new project using the startproject command, Django creates a wsgi.py file inside your project directory. This file contains a WSGI application callable, which is an access point to your application.
+WSGI is used for both running your project with the Django development server and deploying your application with the server of your choice in a production environment
+
+## NGINX
+NGINX is a web server focused on high concurrency, performance, and low memory usage. NGINX also acts as a reverse proxy, receiving HTTP and WebSocket requests and routing them to different backends.
+
+uWSGI is capable of serving static files flawlessly, but it is not as fast and effective as NGINX
+
+## Collecting static files
+Each application in your Django project may contain static files in a static/ directory. Django provides a command to collect static files from all applications into a single location. This simplifies the setup for serving static files in production. The collectstatic command collects the static files from all applications of the project into the path defined with the STATIC_ROOT setting.
+
+## Securing site with SSL/TLS
+The TLS protocol is the standard for serving websites through a secure connection. The TLS predecessor is SSL. Although SSL is now deprecated, in multiple libraries and online documentation, you will find references to both the terms TLS and SSL. It’s strongly encouraged that you serve your websites over HTTPS.
+
+## Checking your project for production
+python manage.py check --settings=educa.settings.local
+python manage.py check --deploy --settings=educa.settings.local
+
+### HTTP Strict Transport Security (HSTS)
+The HSTS policy prevents users from bypassing warnings and connecting to a site with an expired, self-signed, or otherwise invalid SSL certificate.
+When you own a real domain, you can apply for a trusted Certificate Authority (CA) to issue an SSL/TLS certificate for it, so that browsers can verify its identity. In that case, you can give a value to SECURE_HSTS_SECONDS higher than 0, which is the default value
+
+## inclduing Daphne in the NGINX configuration
+NGINX runs in front of uWSGI and Daphne as a reverse proxy server. NGINX faces the web and passes
+requests to the application server (uWSGI or Daphne) based on their path prefix. Besides this, NGINX
+also serves static files and redirects non-secure requests to secure ones. This setup reduces downtime,
+consumes fewer server resources, and provides greater performance and security.
+
+For more advanced production environments, you will need to dynamically distribute containers
+across a varying number of machines. For that, instead of Docker Compose, you will need an orches-
+trator like Docker Swarm mode or Kubernetes
+
+## Creating a custom middleware
