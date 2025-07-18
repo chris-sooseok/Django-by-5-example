@@ -6,3 +6,7 @@
 cert.crt
 cert.key
 media/
+ssl/
+db.sqlite3
+config/
+data/

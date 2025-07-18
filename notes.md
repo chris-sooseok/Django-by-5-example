@@ -29,6 +29,10 @@ docker rm blog_db
 ## delete image
 docker rmi -f <image_id_or_name>
 
+## start container
+docker ps -a
+docker start blog_db
+
 ## DB
 docker run --name=blog_db -e POSTGRES_DB=blog -e POSTGRES_USER=blog -e POSTGRES_PASSWORD=xxxxx -p 5433:5432 -d postgres:16.2
 
