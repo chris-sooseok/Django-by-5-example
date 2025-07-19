@@ -37,7 +37,7 @@ python -m pip install django-taggit==5.0.1
       keep track of new posts, articles, or other content without having to manually visit the site.
 
 ### ORM (Object Relational Mapper) - database abstraction API
-- is a lyaer of abstraction that you can interact with SQL without writing raw SQL
+- Is a lyaer of abstraction that you can interact with SQL without writing raw SQL
 - Django ORM is based on QuerySets, which is a collection of database queries to retrieve objects from your database
 - Django Query Sets are lazy
 - You can also create a custom manager that equip your needs of queries
@@ -76,20 +76,20 @@ python -m pip install django-taggit==5.0.1
     - You can always customize these templates, models, forms if you want
 
 ### Middleware
-middleware is classes with methods that are globally executed during the request or response phase.
+middleware are classes with methods that are globally executed during the request or response phase.
 
 django.contrib.auth comes with two middleware classes found in the setting
 - AuthenticationMiddleware: associates users with requests using sessions
 - SessionMiddleware: handles the current session across requests
 
-The current user is set in the HttpRequest by the authentication middleware. You can access it with request.user in template files
+The current user is set in the HttpRequest by the authentication middleware. You can access it with request.user in templates
 
 ### form clean method
     - forms.ModelForm comes with built-in clean method which is called to validate form data when is_valid is called
     - You can override this method or use clean_<fieldname> to apply it to a specific field
 
 ### auth password hashing
-PBKDF2 hasher is used by default since scrypt which is more secure requires OpenSSL and more memory
+    - PBKDF2 hasher is used by default since scrypt which is more secure requires OpenSSL and more memory
 
 ### Extending user model: adding profile
 
@@ -98,14 +98,16 @@ PBKDF2 hasher is used by default since scrypt which is more secure requires Open
 
 ### Messages Framework
     - allow you to send one time notifications
-    - Messages are stored in a cookie by default (falling back to session storage), and once displayed is cleared in the next request from the user
-    The messages framework includes the django.contrib.messages.context_processors.messages context processor, which adds a messages variable to the request context in templates
+    - Messages are stored in a cookie by default (falling back to session storage), and once displayed is cleared
+     in the next request from the user
+    - The messages framework includes the django.contrib.messages.context_processors.messages context processor,
+     which adds a messages variable to the request context in templates
 
 ### Context processors
     - functions that makes variables accessible in templates
 
 ### Custom authentication backend
-DJango allows you to authentiate users against different sources, such as
+Django allows you to authentiate users against different sources, such as
 - the built-in Django authentication system
 - LDAP (Lightweight Directory Acess Protocol) servers
 - third-party providers
@@ -255,7 +257,7 @@ python manage.py debugsqlshell
     - cached database sessions: Session data is stored in a write-through cache and database. Reads only use the database if the data is not already in the cache.
     - cookie-based sessions
 
-### cart context processor
+### Cart context processor
     - context_processor in cart app that provides cart access in templates
     - include cart.context_processor in the list of context processors in the project settings
 
@@ -317,7 +319,7 @@ Linking Stripe payment id to your Order model to see the payment details in the 
 
 # Chapter 10: coupons and recommendation systems
 
-### coupon
+### Coupon
     - construct coupon attribute in cart class that is created with session data
 
 ### Recommendation System with Redis
@@ -396,17 +398,23 @@ Elearning-platform
 # Chapter 12: building e-learning platform
 
 ### building course models
-Each course will be divided into a configurable number of modules, and each module will contain a configurable number of contents.
+    - Each course will be divided into a configurable number of modules, and each module will contain a configurable number of contents.
 
 ### Using fixtures to provide initial data for models
-    - dumpdata: dumps data from db into the standard output. The resulting data structure includes information about the model and its fields for django to be able to load it into db
+    - dumpdata: dumps data from db into the standard output. The resulting data structure includes
+     information about the model and its fields for django to be able to load it into db
     - loaddata: load data structure into db
 
-### Creating models for polymorphic content
-django offers three options to use model inheritance
-    - abstract models: Useful when you want to put some common information into several models
-    - Multi-table model inheritance: In multi-table inheritance, each model corresponds to a database table. Django creates a OneToOneField field for the relationship between the child model and its parent model
-    - Proxy models: Useful when you need to change the behavior of a model, for example, by including additional methods, changing the default manager, or using different meta options
+### Creating polymorphic models
+    - django offers three options to use model inheritance    
+        - abstract models: 
+            - Useful when you want to put some common information into several models
+        - Multi-table model inheritance:
+            - each parent model corresponds to a database table.
+            - Django creates a OneToOneField field for the relationship between the child model and its parent model
+        - Proxy models: 
+            - Useful when you need to change the behavior of a model, for example, by including additional 
+                methods, changing the default manager, or using different meta options
 
 ### Creating custom model fields
     - you can also create your own model fields to store custom data or alter the behavior of existing
@@ -418,7 +426,7 @@ django offers three options to use model inheritance
 
 ### class-based views
     - When you need to provide a specific behavior for several class-based views, it is recommended that you use mixins.
-    - Mixins are a type of class designed to supply methods to other classes but aren’t intended to be used independently.
+        - Mixins are a type of class designed to supply methods to other classes but aren’t intended to be used independently.
         - This allows you to develop shared functionalities that can be incorporated into various classes in a modular manner, simply by having those classes inherit from mixins. 
     - The concept is similar to a base class, but you can use multiple mixins to extend the funtionality of a given class
 
@@ -431,6 +439,7 @@ formsets manage multiple instances of a certain form
 ### reordering modules and their contents
 HTML Drag and Drop API to use fetch api to send an async http request that stores the new module order
 
+# Chapter 14: Rendering and caching contents
 python -m pip install django-braces==1.15.0
 django-braces contains a collection of generic mexins that provides additiona features for class-based views that are useful for various common scenarios
 
@@ -450,7 +459,7 @@ python -m pip install pymemcache==4.0.0
 ### redis
 python -m pip install django-redisboard==8.4.0
 
-### Building API
+# Chapter 15: Building an API
 Django REST framework
 - Serializers: To transform data into a standardized format that other programs can understand, or to deserialize data, by converting data into a format that your program can process.
 - Parsers and renderers: To render (or format) serialized data appropriately before it is returned in an HTTP response. Similarly, to parse incoming data to ensure that it’s in the correct form.
@@ -473,7 +482,7 @@ DRF provides the following authentication backends:
 - DjangoModelPermissions: Permissions tied to django.contrib.auth. The view requires a queryset attribute. Only authenticated users with model permissions assigned are granted permission.
 - DjangoObjectPermissions: Django permissions on a per-object basis.
 
-## Building chat server
+# Chapter 16: Building a chat server
 
 ### Asynchronous applications using ASGI
 Django is usually deployed using Web Server Gateway Interface (WSGI), which is the standard interface for Python applications to handle HTTP requests.
@@ -510,7 +519,7 @@ to complete. They don’t require additional threads when handling requests, thu
 and increasing the ability to scale to more users and requests simultaneously.
 
 
-## Deployment
+# Chapter 17: Going live
 
 docker compose exec web python /code/educa/manage.py migrate
 
