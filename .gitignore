@@ -10,3 +10,4 @@ ssl/
 db.sqlite3
 config/
 data/
+__pycache__/
