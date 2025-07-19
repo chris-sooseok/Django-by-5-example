@@ -10,27 +10,31 @@ A function named, get_absolute_url, to directly route clients to specific urls
 ### Adding pagination
 ### Class-based views
 Advantages are
-
     - to organize code related to HTTP methods, such as GET, or POST in separate methods, instead of using conditional branching
     - to use multiple inheritance to create resuable view classes
 ### Sending emails with Django
 ### Adding comments to posts using forms from models
 
-## Adding comments to post
+### Adding comments to post
 
 
-# Chap 3: extending your blog application
+
+# Chap 3: Extending your blog application
 
 ### taggit for tag implementation
-Manage content in a non-hierarchical manner with third party library
+Manage content in a non-hierarchical manner with third party library <br>
 python -m pip install django-taggit==5.0.1
 
 ### adding sitemap and RSS feed
     sitemap
-    - a sitemap is a file that provides search engines with a list of all the important pages on a website, along with their URLs and other relevant information. This helps search engines crawl and index your website more efficiently, potentially leading to faster crawling and indexing of your content. 
+    - a sitemap is a file that provides search engines with a list of all the important pages on a website, along with
+     their URLs and other relevant information. This helps search engines crawl and index your website more efficiently,
+      potentially leading to faster crawling and indexing of your content. 
 
     RSS feed
-    - An RSS (Really Simple Syndication) feed is an online file that provides updates about a website's content in a standardized, computer-readable format. It essentially acts as a subscription to a website, allowing users to keep track of new posts, articles, or other content without having to manually visit the site.
+    - An RSS (Really Simple Syndication) feed is an online file that provides updates about a website's content in
+     a standardized, computer-readable format. It essentially acts as a subscription to a website, allowing users to
+      keep track of new posts, articles, or other content without having to manually visit the site.
 
 ### ORM (Object Relational Mapper) - database abstraction API
 - is a lyaer of abstraction that you can interact with SQL without writing raw SQL
@@ -39,8 +43,8 @@ python -m pip install django-taggit==5.0.1
 - You can also create a custom manager that equip your needs of queries
 
 
-### trigram search
-DJango provides a powerful search functionality built on top of PostgreSQL full-text search features. <br>
+### Trigram search
+    - DJango provides a powerful search functionality built on top of PostgreSQL full-text search features. <br>
     - Include 'django.contrib.postgres' in INSTALLED_APPS <br>
     - Trigram search feature can be installed by creating an empty migration file and including TrigramExtensions init it 
         - To create an empty migration file
@@ -64,12 +68,12 @@ DJango provides a powerful search functionality built on top of PostgreSQL full-
 ---
 # Bookmarks App
 ----
-# Chapter 4: building social website authentication
+# Chapter 4: Social website authentication
 
 ### Django auth framework
-Login, logout, password change, receovery, etc, features
-Django auth framework provides authentiation, sessions, permissions, and user groups models, views, and forms
-You can always customize these templates, models, forms if you want
+    - Login, logout, password change, receovery, etc, features
+    - Django auth framework provides authentiation, sessions, permissions, and user groups models, views, and forms
+    - You can always customize these templates, models, forms if you want
 
 ### Middleware
 middleware is classes with methods that are globally executed during the request or response phase.
@@ -81,8 +85,8 @@ django.contrib.auth comes with two middleware classes found in the setting
 The current user is set in the HttpRequest by the authentication middleware. You can access it with request.user in template files
 
 ### form clean method
-forms.ModelForm comes with built-in clean method which is called to validate form data when is_valid is called
-You can override this method or use clean_<fieldname> to apply it to a specific field
+    - forms.ModelForm comes with built-in clean method which is called to validate form data when is_valid is called
+    - You can override this method or use clean_<fieldname> to apply it to a specific field
 
 ### auth password hashing
 PBKDF2 hasher is used by default since scrypt which is more secure requires OpenSSL and more memory
@@ -92,11 +96,13 @@ PBKDF2 hasher is used by default since scrypt which is more secure requires Open
 
 # Chapter 5: Oauth Authentication and profile creation pipeline
 
-### Messages
-Messaes are stored in a cookie by default (falling back to session storage), and they are displayed and cleared in the next request from the user.
+### Messages Framework
+    - allow you to send one time notifications
+    - Messages are stored in a cookie by default (falling back to session storage), and once displayed is cleared in the next request from the user
+    The messages framework includes the django.contrib.messages.context_processors.messages context processor, which adds a messages variable to the request context in templates
 
-### Context processor
-A context processor is a Python function that takes the request object as an argument and returns a dictionary that gets added to the request context which you can access within template files
+### Context processors
+    - functions that makes variables accessible in templates
 
 ### Custom authentication backend
 DJango allows you to authentiate users against different sources, such as
@@ -108,12 +114,13 @@ DJango allows you to authentiate users against different sources, such as
     - The AUTHENTICATION_BACKENDS setting includes a list of authentication backends available in the project
     - The default setting is ['django.contrib.auth.backends.ModelBackend'], which authenticates users against the database using the User model.
     - Whenever authenticate() function is called, DJango tries to authenticate the user against each of the backends defined in AUTHENTICATION_BACKENDS one by one
-
     - Django provides a simple way to define your own authentication backends. An authentication backend is a class that provides the following two methods
-        - authenticate(): It takes the request object and user crendentials as parameters.
-            It has to return a user object that matches those credentials if the credentials are valid, or None otherwise.
-            The request parameter is an HttpRequest object, or None if it’s not provided to the authenticate() function.
-        - get_user(): It takes a user ID parameter and has to return a user object.
+        - authenticate(): 
+            - It takes the request object and user crendentials as parameters.
+            - It has to return a user object that matches those credentials if the credentials are valid, or None otherwise.
+            - The request parameter is an HttpRequest object, or None if it’s not provided to the authenticate() function.
+        - get_user(): 
+            - It takes a user ID parameter and has to return a user object.
 
 ### Python SSO (single sign-on) Oauth (open authorization) Steps
 1. python -m pip install social-auth-app-django==5.4.0
@@ -122,8 +129,9 @@ DJango allows you to authentiate users against different sources, such as
 4. include mysite.com in ALLOWED_HOSTS 
 
 ### TLS and SSL
-The Transport Layer Security (TLS) protocol is the standard for serving websites through a secure connection
-The TLS predecessor is the Secure Socekts Layer (SSL)
+
+The TLS (Transport Layer Security) protocol is the standard for serving websites through a secure connection
+The TLS predecessor is SSL (Secure Socekts Layer)
 
 The Django development server is not able to serve your site through HTTPS since that is not its intended use. <br>
 To test the social authentication functionality serving the site through HTTPS, use RunServerPlus extension of the package Django Extensions.
@@ -131,11 +139,12 @@ This package contains a collection of useful Django tools.
 
 python -m pip install django-exntesions==3.2.3
 python -m pip install werkzeug=3.0.2
-- this contains a debugger layer required by the RunServerPlus extension of Django Extensions
+    - this contains a debugger layer required by the RunServerPlus extension of Django Extensions
 python -m pip install pyOpenSSL==24.1.0
-- this is required to use the SSL/TLS functionality of RunServerPlus
+    - this is required to use the SSL/TLS functionality of RunServerPlus
 
 5. include 'django_extensions' in INSTALLED_APPS
+
 6. python manage.py runserver_plus --cert-file cert.crt
 Django Extensions will generate a key and  SSL/TLS certificate automatically, then, now you can access your site with https with the certificate
 
@@ -149,29 +158,28 @@ Django Extensions will generate a key and  SSL/TLS certificate automatically, th
 
 # Chapter 6: Implementing Bookmark
 
-### Bookmarklet implementation
-- add bookmarklet_launcher.js to bookmark bars
-- launcher will add bookmark DOM
-- bookmark DOM display all image elements found on a page
-- add click event to each image that clikcing will redirect to bookmark page on your website
+### Bookmarklet on browser
+    - add bookmarklet_launcher.js to bookmark bars
+    - launcher will add bookmark DOM
+    - bookmark DOM display all image elements found on a page
+    - add click event to each image that clikcing will redirect to bookmark page on your website
 
-### thumbnails using easy-thembnails
-- use {% load thumbnail %} to create and display thumbnails of images
-- path to upload thumbnail image is specified by MEDIA_ROOT and upload_to field
+### Thumbnails using easy-thembnails
+    - use {% load thumbnail %} to create and display thumbnails of images
+    - path to upload thumbnail image is specified by MEDIA_ROOT and upload_to field
 
 ### Asynchronous Javascript and XML (AJAX) to implment "like" feature
-- AJAX is a misleading name because AJAX requests can exchange data not only in XML format but also in formats such as JSON, HTML, and plain text
-- send request without reloading - JS fetch function
+    - AJAX is a misleading name because AJAX requests can exchange data not only in XML format but also in formats such as JSON, HTML, and plain text
+    - send request without reloading - JS fetch function
 
-### JavaScript and Django template
-- In some cases, it is useful to generate JavaScript code dynamically using Django in order to use the results of QuerySets or server-side calculations to define variables in JavaScript.
-- We have to include the CSRF token in all JS fetch requests that use unsafe HTTP methods, such as POST or PUT.
-
-- To include CSRF token in HTTP requests through JavsScript, we will need to retrieve the token from the csrftoken cookie, which is set by Django if the CSRF protection is active. To handle csrftoken cookie, use JavaScript Cookie which is a lightweight JS API for handling cookies
+### JS in Django template
+    - In some cases, it is useful to generate JS code dynamically using Django in order to use the results of QuerySets or server-side calculations to define variables in JavaScript.
+    - We have to include the CSRF token in all JS fetch requests that use unsafe HTTP methods, such as POST or PUT.
+    - To include CSRF token in HTTP requests through JavsScript, we will need to retrieve the token from the csrftoken cookie, which is set by Django if the CSRF protection is active. To handle csrftoken cookie, use JavaScript Cookie which is a lightweight JS API for handling cookies
  
 ### Infinite scrolling
-image list view that handles both standard browser requests and requests originating from JS
-render whole page for the first page request, and append only images for additional request that originates from JS
+    image list view that handles both standard browser requests and requests originating from JS
+    render whole page for the first page request, and append only images for additional request that originates from JS
 
 
 # Chapter 7: Tracking user actions
@@ -179,37 +187,39 @@ render whole page for the first page request, and append only images for additio
     - Creating many-to-many relationship between users by using a custom intermediate model
     - Adding or deleting relationship through the intermediate model
 
-### activity stream application with contenttype framework
-Contenttype framework
-- Can track all models installed in your project and provides a generic interface to interact with your models
-- contenttypes app contains a ContentType model of which instances represents the actual models of your application. New instances of ContentType are automatically created when new models are installed in your project
-- each model contains fields
-    -   app_label, model, and name
+## Activity stream application with contenttype framework
+### Contenttype framework
+    - Can track all Models installed in your project and provides a generic interface to interact with the Models
+    - contenttypes app contains a ContentType model which instances represent the actual models of your application.
+    - New instances of ContentType are automatically created when new models are installed in your project
+    - each model contains fields
+        -   app_label, model, and name
 
-Craete action model and create_action function that can be usally globally across your project 
+### Craete action model and create_action function that can be usally globally across your project 
     
-Generic key
+### GenericForeignKey
 - Generic relations allow you to associate models in a non-exclusive manner, enabling a single model to relate to multiple other models.
 
 ### Optimized QuerySet for relationships
-select_related and prefetch_related
+    - select_related and prefetch_related
 
 ### Denormalizing images_total_like count field
-- Denormalization is a process to make data redundant in a way that it optimizes read performance by coping related data to an object
-- A side effect is that it is difficult to keep your denormalized data updated
-There are several ways to improve performance that you have to take into account before denormalizing fields. Consider database indexes, query optimization, and caching before starting to denormalize your data.
+    - Denormalization is a process to make data redundant in a way that it optimizes read performance by coping related data to an object
+    - A side effect is that it is difficult to keep your denormalized data updated
+        - we are doing this through signals
+    - There are several ways to improve performance that you have to take into account before denormalizing fields.
+        - Consider database indexes, query optimization, and caching before starting to denormalize your data.
 
 ### Singals to incremenet image_total_likes count
 django offers several signals for models located at django.db.models.signals. Some examples are as follows:
-- pre_save and post_save that are sent before or after calling the save() method of a model
-- pre_delete and post_delete after of before delete() method of a model or querySet
-- m2m_changed when many-to-many field on a model is changed
+    - pre_save and post_save that are sent before or after calling the save() method of a model
+    - pre_delete and post_delete after of before delete() method of a model or querySet
+    - m2m_changed when many-to-many field on a model is changed
+    - Django signals are synchronous and blocking. Asynchronous tasks are done with Celery
 
-Django signals are synchronous and blocking. Asynchronous taks are done with Celery
-
-### Application configuration classes
-Django allows you to specify configuration classes for your apps, which is <appname>Config file.
-The application configuration class allows you to store metadata and the configuration for the application, and it provides introspection for the application. 
+### Application configuration <apps.py>
+    - Django allows you to specify configuration classes for your apps, which is <appname>Config file.
+    - The application configuration class allows you to store metadata and the configuration for the application, and it provides introspection for the application. 
 
 ### debug toolbar
 python -m pip install django-debug-toolbar==4.3.0
@@ -220,9 +230,9 @@ python manage.py debugsqlshell
 - outputs SQL statements for jango ORM queries
 
 ### Storing image view counts with Redis
-- key/value database that stores everything in memory
-- data can be persisted by dumping data to disk or keeping commands to a log
-- versatile and supports diverse data structures
+    - key/value database that stores everything in memory
+    - data can be persisted by dumping data to disk or keeping commands to a log
+    - versatile and supports diverse data structures
 
 
 ---
@@ -231,42 +241,41 @@ python manage.py debugsqlshell
 
 # Chapter 8: Building an online shop
 
-### shopping cart using sessions
-- Session data is stored on the server side, and cookies contain the session ID unless you use the cookie-based session engine.
- The session middleware manages the sending and receiving of cookies. 
- The default session engine stores session data in the database, but you can choose other session engines.
+### Shopping cart using sessions
+    - Session data is stored on the server side, and cookies contain the session ID unless you use the cookie-based session engine.
+    - The session middleware manages the sending and receiving of cookies. 
+    - The default session engine stores session data in the database, but you can choose other session engines.
+    - The session middleware makes the current session available in the request object. You can access the current session using request.session
 
-- The session middleware makes the current session available in the request object. You can access the current session using request.sessio
-
-- Session Storage types
+### Session Storage types
     - database
     - file-based
     - cached sessions : cached in backend which provides the best performance
-        For better performance use a cache-based session engine. Django supports Memcached out of the box and you can find third-party cache backends for Redis and other cache systems.
+        - For better performance use a cache-based session engine. Django supports Memcached out of the box and you can find third-party cache backends for Redis and other cache systems.
     - cached database sessions: Session data is stored in a write-through cache and database. Reads only use the database if the data is not already in the cache.
     - cookie-based sessions
 
-## cart context processor
-A contextprocessor is a function that takes the request object as an argument and returns a dictionary that gets added to the request context
+### cart context processor
+    - context_processor in cart app that provides cart access in templates
+    - include cart.context_processor in the list of context processors in the project settings
 
 ## Creating asynchronous tasks
 ### Message queue, broker, and worker
-    - message broker manages message queue of which workers consurm from and execute each action from the queue
+    - message broker manages message queue of which workers consume from and execute each action from the queue
 
 ### Celery
- - Celery is a distributed task queue that can process vast amounts of messages. Celery communicates via messages and requires a message broker to mediate between clients and workers
-
-python -m pip install celery==5.4.0
-
- - A celery worker is a process that handles bookkeeping features like
-    - sending/receiving queue messages
-    - registering tasks
-    - killing hung tasks
-    - tracking status
-
- - The CELERY_ALWAYS_EAGER setting allows you to execute tasks locally in a synchronous manner instead of sending them to the queue. This is useful for running unit tests or executing the application in your local environment without running Celery.
+    - python -m pip install celery==5.4.0
+    - Celery is a distributed task queue that can process vast amounts of messages.
+      Celery communicates via messages and requires a message broker to mediate between clients and workers
+    - A celery worker is a process that handles bookkeeping features like
+        - sending/receiving queue messages
+        - registering tasks
+        - killing hung tasks
+        - tracking status
+    - The CELERY_ALWAYS_EAGER setting allows you to execute tasks locally in a synchronous manner instead of sending them to the queue. This is useful for running unit tests or executing the application in your local environment without running Celery.
 
 ### rabbitMQ installation
+    - open-source message broker
     - docker pull rabbitmq:3.13.1-management
     - docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13.1-management
     - http://127.0.0.1:15672/
@@ -280,10 +289,9 @@ python -m pip install celery==5.4.0
 
 # Chapter 9: Managing payments and orders
 ### Integrating a payment gateway
-Using a payment gateway, you can manage customers' orders and delegate payment processing to a reliable, secure third party. <br>
-Stripe provides different products related to payment processing, such as one-off payment, recurring payments, multiparty payments 
-
-python -m pip install stripe==9.3.0
+    - Using a payment gateway, you can manage customers' orders and delegate payment processing to a reliable, secure third party. <br>
+    - Stripe provides different products related to payment processing, such as one-off payment, recurring payments, multiparty payments 
+    - python -m pip install stripe==9.3.0
 
 ### Using webhookes to receive payment notifications
     - Stripe can push real-time events to our app by using webhooks.
@@ -291,9 +299,9 @@ python -m pip install stripe==9.3.0
     - Stripe can send an HTTP request to a URL of our application to notify us of successful payments in real time. The notification of these events will be asynchronous, when the event occurs, regardless of our synchronous calls to the Stripe API.
     - You can add webhook endpoint URLs to your Stripe account to receive events. Since we are using webhooks and we don’t have a hosted website accessible through a public URL, we will use the Stripe Command-Line Interface (CLI) to listen to events and forward them to our local environment.
 
-The Stripe CLI is a developer tool that allows you to test and manage your integration with Stripe directly from your shell
-We use this command to tell Stripe to listen to events and forward them to our localhost.
-stripe listen --forward-to 127.0.0.1:8000/payment/webhook/
+    - The Stripe CLI is a developer tool that allows you to test and manage your integration with Stripe directly from your shell
+    - We use this command to tell Stripe to listen to events and forward them to our localhost.
+    - stripe listen --forward-to 127.0.0.1:8000/payment/webhook/
 
 ### Referencing Stripe payments in orders
 Linking Stripe payment id to your Order model to see the payment details in the Stripe dashboard
@@ -303,94 +311,87 @@ Linking Stripe payment id to your Order model to see the payment details in the 
 ### Extending admin state with custom views
 
 ### Generating PDF invoices dynamically and sending by email asycnronously
-python -m pip install WeasyPrint==61.2
-
-collectstatic command copies all static files from your apps into the directory defined in the STATIC_ROOT setting
-
-Create pdf with weasyprint and attach it to email being sent from Celery worker
+    - python -m pip install WeasyPrint==61.2
+    - collectstatic command copies all static files from your apps into the directory defined in the STATIC_ROOT setting
+    - Create pdf with weasyprint and attach it to email being sent from Celery worker
 
 # Chapter 10: coupons and recommendation systems
 
 ### coupon
-construct coupon attribute in cart class that is created with session data
+    - construct coupon attribute in cart class that is created with session data
 
 ### Recommendation System with Redis
-Create algorithm logic with Redis by building data whenever items are purchased
-Based on the data built, recommend items to each item list
+    - Create algorithm logic with Redis by building data whenever items are purchased
+    - Based on the data built, recommend items to each item list
 
 # Chapter 11: Internationalization and localization
 
 ### Internalization
-Internationalization relies on the GNU gettext toolset to generate and manage message files.
-A message file is a plain text file that represents a language. It contains a part, or all, of the translation strings found in your application and their respective translation for a single language. Once the translation is done, message files are compiled to offer rapid access to translated strings
+    - Internationalization relies on the GNU gettext toolset to generate and manage message files.
+        - A message file is a plain text file that represents a language.
+        - It contains a part, or all, of the translation strings found in your application and their respective translation for a single language. 
+    - Once the translation is done, message files are compiled to offer rapid access to translated strings
+    - mekemessages:
+        - This runs over the source tree to find all the strings marked for translation and creates or updates the .po message files in the locale directory. A single .po file is created for each language
+    - compilemessages:
+        - This compiles the existing .po message files to .mo files, which are used to retrieve translations.
 
-- mekemessages:
-    - This runs over the source tree to find all the strings marked for translation and creates or updates the .po message files in the locale directory. A single .po file is created for each language
-
-- compilemessages:
-    - This compiles the existing .po message files to .mo files, which are used to retrieve translations.
-
-brew install gettext
-
-brew link --force gettext
+    - brew install gettext
+    - brew link --force gettext
 
 ### How to add translations to a django project
-1. Mark the strings for translation in your Python code and your templates.
-2. Run the makemessages command to create or update message files that include all the translation strings from your code.
-3. Translate the strings contained in the message files.
-4. Compile the message files using the compilemessages management command.
+    1. Mark the strings for translation in your Python code and your templates.
+    2. Run the makemessages command to create or update message files that include all the translation strings from your code.
+    3. Translate the strings contained in the message files.
+    4. Compile the message files using the compilemessages management command.
 
 ### How dango determines the current language
-djnago comes with a middleware that determines the current language based on the request data. This is the LocaleMiddleware that resides in django.middleware.locale.LocaleMiddleware which performs the following tasks
-    
-    1. If you are using i18n_patterns, that is, you are using translated URL patterns, it looks for a language prefix in the requested URL to determine the current language. You will learn to translate URL patterns in the Translating URL patterns section.
-    2. If no language prefix is found, it looks for an existing LANGUAGE_SESSION_KEY in the current user’s session.
-    3. If the language is not set in the session, it looks for an existing cookie with the current language. A custom name for this cookie can be provided in the LANGUAGE_COOKIE_NAME setting. By default, the name for this cookie is django_language.
-    4. If no cookie is found, it looks for the Accept-Language HTTP header of the request.
-    5. If the Accept-Language header does not specify a language, Django uses the language defined in the LANGUAGE_CODE setting.
-
-By default, Django will use the language defined in the LANGUAGE_CODE setting unless you are using LocaleMiddleware. The process described here only applies when using this middleware.
+    - djnago comes with a middleware that determines the current language based on the request data. This is the LocaleMiddleware that resides in django.middleware.locale.LocaleMiddleware which performs the following tasks
+        1. If you are using i18n_patterns, that is, you are using translated URL patterns, it looks for a language prefix in the requested URL to determine the current language. You will learn to translate URL patterns in the Translating URL patterns section.
+        2. If no language prefix is found, it looks for an existing LANGUAGE_SESSION_KEY in the current user’s session.
+        3. If the language is not set in the session, it looks for an existing cookie with the current language. A custom name for this cookie can be provided in the LANGUAGE_COOKIE_NAME setting. By default, the name for this cookie is django_language.
+        4. If no cookie is found, it looks for the Accept-Language HTTP header of the request.
+        5. If the Accept-Language header does not specify a language, Django uses the language defined in the LANGUAGE_CODE setting.
+    - By default, Django will use the language defined in the LANGUAGE_CODE setting unless you are using LocaleMiddleware. The process described here only applies when using this middleware.
 
 ### Translating python code
 There are various methods to handle translations within python code
     - Standard translations
     - Lazy translations: Executed when the value is accessed rather than when the function is called.
-    A common example where lazy translations are beneficial is in the settings.py file of your project, where immediate translation is not practical because the settings must be defined before the translation system is fully ready.
+        - A common example where lazy translations are beneficial is in the settings.py file of your project, where immediate translation is not practical because the settings must be defined before the translation system is fully ready.
     - Translations including variables: Used to interpolate variables within strings that are to be translated.
     - Plural forms in translations: Techniques to manage translations that depend on numerical quantities that might affect the string being translated.
 
-For translating literals in your Python code, you can mark strings for translation using the gettext() function included in django.utils.translation. This function translates the message and returns a string. 
+    - For translating literals in your Python code, you can mark strings for translation using the gettext() function included in django.utils.translation. This function translates the message and returns a string. 
 
 django-admin makemessages --all
 
 django-admin compilemessages
 
 ### Translating templates
-{% translate %} template tag
-
+{% translate %} template tag    
     - allows you to mark a literal for translation. Internally, exeuctes gettext() on the given text
 
 ### Using Rosetta translation interface
-Rosetta is a third-party application that allows you to edit translations directly in the browser, using the same interface as the Django administration site. Rosetta makes it easy to edit .po files, and it updates compiled translation files. This eliminates the need to download and upload translation files, and it supports collaborative editing by multiple users.
+    - Rosetta is a third-party application that allows you to edit translations directly in the browser, using the same interface as the Django administration site. Rosetta makes it easy to edit .po files, and it updates compiled translation files. This eliminates the need to download and upload translation files, and it supports collaborative editing by multiple users.
 
 ### URL patterns for internationalization
-One reason for translating URLs is to optimize your site for search engines.
+    - One reason for translating URLs is to optimize your site for search engines.
 
 ### Translating models with django-parler
-django-parler generates a separate database table for each model that contains translations. This table includes all the translated fields and a foreign key for the original object that the translation belongs to.
+    - django-parler generates a separate database table for each model that contains translations. This table includes all the translated fields and a foreign key for the original object that the translation belongs to.
 
 python -m pip install django-parler==2.3
 
 ### localization with localflavor which provides localized validation
-By default, Django applies the format localization for each locale.
+    - By default, Django applies the format localization for each locale.
 
-python -m pip install django-localflavor==4.0
-    - It’s very useful for validating local regions, local phone numbers, identity card numbers, social security numbers, and so on.
+    - python -m pip install django-localflavor==4.0
+        - It’s very useful for validating local regions, local phone numbers, identity card numbers, social security numbers, and so on.
 
 ---
 Elearning-platform
 ---
-
 
 # Chapter 12: building e-learning platform
 
@@ -403,21 +404,23 @@ Each course will be divided into a configurable number of modules, and each modu
 
 ### Creating models for polymorphic content
 django offers three options to use model inheritance
-- abstract models: Useful when you want to put some common information into several models
-- Multi-table model inheritance: In multi-table inheritance, each model corresponds to a database table. Django creates a OneToOneField field for the relationship between the child model and its parent model
-- Proxy models: Useful when you need to change the behavior of a model, for example, by including additional methods, changing the default manager, or using different meta options
+    - abstract models: Useful when you want to put some common information into several models
+    - Multi-table model inheritance: In multi-table inheritance, each model corresponds to a database table. Django creates a OneToOneField field for the relationship between the child model and its parent model
+    - Proxy models: Useful when you need to change the behavior of a model, for example, by including additional methods, changing the default manager, or using different meta options
 
 ### Creating custom model fields
-you can also create your own model fields to store custom data or alter the behavior of existing
-fields. Custom fields allow you to store unique data types, implement custom validations, encapsulate
-complex data logic related to the field, or define specific rendering forms using custom widgets.
+    - you can also create your own model fields to store custom data or alter the behavior of existing
+    fields.
+    - Custom fields allow you to store unique data types, implement custom validations, encapsulate 
+    complex data logic related to the field, or define specific rendering forms using custom widgets.
 
 # Chapter 13: Creating a content management system
 
 ### class-based views
-When you need to provide a specific behavior for several class-based views, it is recommended that you use mixins.
-Mixins are a type of class designed to supply methods to other classes but aren’t intended to be used independently. This allows you to develop shared functionalities that can be incorporated into various classes in a modular manner, simply by having those classes inherit from mixins. 
-The concept is similar to a base class, but you can use multiple mixins to extend the funtionality of a given class
+    - When you need to provide a specific behavior for several class-based views, it is recommended that you use mixins.
+    - Mixins are a type of class designed to supply methods to other classes but aren’t intended to be used independently.
+        - This allows you to develop shared functionalities that can be incorporated into various classes in a modular manner, simply by having those classes inherit from mixins. 
+    - The concept is similar to a base class, but you can use multiple mixins to extend the funtionality of a given class
 
 ### Working with groups and permissions
 By default, Django generates four permissions for each model in the installed applications: add, view, change, and delete.

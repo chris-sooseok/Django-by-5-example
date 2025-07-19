@@ -65,10 +65,15 @@ ROOT_URLCONF = 'bookmarks.urls'
 # A context processor is a Python function that takes the request object as an argument and returns a dictionary that gets added to the request context
 TEMPLATES = [
     {
+        # ! uses Django's built-in template engine
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # ! empty list means no custom template directories (uses app directories)
         'DIRS': [],
+        # ! Django lloks for templates in each app's tempaltes/ folder
         'APP_DIRS': True,
         'OPTIONS': {
+            # ! functions that add variables to every template context
+            # ? these are what makes accessible these variables in templates
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -144,6 +149,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MDEIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# ! Oauth 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
@@ -155,7 +161,7 @@ from decouple import config
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_OAUTH_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_OAUTH_SECRET')
 
-# default authentication pipeline used by Python Social Auth
+# default authentication pipeline used by social_auth
 SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
@@ -171,8 +177,8 @@ SOCIAL_AUTH_PIPELINE = [
 
 from django.urls import reverse_lazy
 
-# ? Django adds get_absolute_url dynamically to any models that appear in this
-# ? this method returns the corresponding URL for the given model specified in the setting, which follos /account/users/<username> format
+# ? override get_absolute_url method for User model
+# ? used in templates as user.get_absolute_url()
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username]),
 }
