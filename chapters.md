@@ -358,6 +358,7 @@ Linking Stripe payment id to your Order model to see the payment details in the 
 
 ### Translating python code
 There are various methods to handle translations within python code
+
     - Standard translations
     - Lazy translations: Executed when the value is accessed rather than when the function is called.
         - A common example where lazy translations are beneficial is in the settings.py file of your project, where immediate translation is not practical because the settings must be defined before the translation system is fully ready.
